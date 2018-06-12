@@ -46,11 +46,21 @@ public class Mario extends Sprite {
 
     public World world;
     public Body b2body;
+    private TextureRegion marioStand;
 
-    public Mario(World world){
+    public Mario(World world, PlayScreen screen){
+        super(screen.getAtlas().findRegion("little_mario"));
         this.world = world;
         defineMario();
+        marioStand = new TextureRegion(getTexture(),0,0,16,16);
+        setBounds(0,0,16 / MyGdxGame.PPM, 16 / MyGdxGame.PPM);
+        setRegion(marioStand);
     }
+
+    public void update(float dt){
+        setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
+    }
+
     public void defineMario(){
 
         BodyDef bdef = new BodyDef();
@@ -59,7 +69,7 @@ public class Mario extends Sprite {
         b2body = world.createBody(bdef);
         FixtureDef fdef = new FixtureDef();
         CircleShape shape = new CircleShape();
-        shape.setRadius(5 / MyGdxGame.PPM);
+        shape.setRadius(6 / MyGdxGame.PPM);
 
         fdef.shape = shape;
         b2body.createFixture(fdef);

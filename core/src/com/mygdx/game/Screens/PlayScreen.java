@@ -1,6 +1,7 @@
 package com.mygdx.game.Screens;
 
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -28,7 +29,7 @@ import com.mygdx.game.Tools.B2WorldCreator;
 
 public class PlayScreen implements Screen{
    private MyGdxGame game;
-
+    private TextureAtlas atlas;
     private Hud hud;
     private OrthographicCamera gameCam;
     private Viewport gamePort;
@@ -48,6 +49,7 @@ public class PlayScreen implements Screen{
 
 
     public PlayScreen(MyGdxGame game){
+        atlas = new TextureAtlas("Hero_and_others.pack");
         this.game = game;
             //create cam used to follow mario through cam world
         gameCam = new OrthographicCamera();
@@ -67,8 +69,12 @@ public class PlayScreen implements Screen{
             //allows for debug lines of our box2d world.
         b2dr = new Box2DDebugRenderer();
        new B2WorldCreator(world, map);
-       player = new Mario(world);
+       player = new Mario(world, this);
         }
+
+    public TextureAtlas getAtlas() {
+        return atlas;
+    }
 
     @Override
     public void show() {
@@ -93,6 +99,7 @@ public class PlayScreen implements Screen{
         handleInput(dt);
 
         world.step(1/60f, 6, 2);
+        player.update(dt);
         gameCam.position.x = player.b2body.getPosition().x;
         gameCam.update();
         renderer.setView(gameCam);
@@ -110,8 +117,13 @@ public class PlayScreen implements Screen{
 
         b2dr.render(world, gameCam.combined);
 
-     game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
-     hud.stage.draw();
+        game.batch.setProjectionMatrix(gameCam.combined);
+        game.batch.begin();
+        player.draw(game.batch);
+        game.batch.end();
+
+        game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
+        hud.stage.draw();
     }
 
     @Override
