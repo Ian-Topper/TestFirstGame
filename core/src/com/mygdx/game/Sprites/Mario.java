@@ -67,14 +67,19 @@ public class Mario extends Sprite {
 
         Array<TextureRegion> frames = new Array<TextureRegion>();
 
-        for(int i =1; i < 4; i++)
+        for(int i =1; i < 4; i++){
             frames.add(new TextureRegion(getTexture(), i * 16, 0, 16, 16));
+        }
         marioRun = new Animation<TextureRegion>(0.1f, frames);
         frames.clear();
 
         for (int i = 4; i< 6; i++)
             frames.add(new TextureRegion(getTexture(), i * 16, 0, 16, 16));
         marioJump = new Animation<TextureRegion>(0.1f, frames);
+        frames.clear();
+
+        //get jump animation frames and add them to marioJump Animation
+
 
 
         defineMario();
@@ -98,6 +103,7 @@ public class Mario extends Sprite {
                 break;
             case RUNNING:
                 region = marioRun.getKeyFrame(stateTimer, true);
+                break;
             case FALLING:
             case STANDING:
                 default:
@@ -128,7 +134,7 @@ public class Mario extends Sprite {
         if(b2body.getLinearVelocity().y > 0 || (b2body.getLinearVelocity().y < 0 && previousState == State.JUMPING))
             return State.JUMPING;
             //if negative in Y-Axis mario is falling
-        else if(b2body.getLinearVelocity().x > 0)
+        else if(b2body.getLinearVelocity().x != 0)
             return State.RUNNING;
         else if(b2body.getLinearVelocity().y < 0)
             return State.FALLING;
@@ -152,42 +158,10 @@ public class Mario extends Sprite {
         fdef.shape = shape;
         b2body.createFixture(fdef);
 
+    }
+    public float getStateTimer(){
 
-      /*  fdef.filter.maskBits = MarioBros.GROUND_BIT |
-
-                MarioBros.COIN_BIT |
-
-                MarioBros.BRICK_BIT |
-
-                MarioBros.ENEMY_BIT |
-
-                MarioBros.OBJECT_BIT |
-
-                MarioBros.ENEMY_HEAD_BIT |
-
-                MarioBros.ITEM_BIT;
-
-
-
-        fdef.shape = shape;
-
-        b2body.createFixture(fdef).setUserData(this);
-
-
-
-        EdgeShape head = new EdgeShape();
-
-        head.set(new Vector2(-2 / MarioBros.PPM, 6 / MarioBros.PPM), new Vector2(2 / MarioBros.PPM, 6 / MarioBros.PPM));
-
-        fdef.filter.categoryBits = MarioBros.MARIO_HEAD_BIT;
-
-        fdef.shape = head;
-
-        fdef.isSensor = true;
-
-
-
-        b2body.createFixture(fdef).setUserData(this);*/
+        return stateTimer;
 
     }
 }
