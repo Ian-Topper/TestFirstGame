@@ -26,6 +26,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.Sprites.Mario;
 import com.mygdx.game.Tools.B2WorldCreator;
+import com.mygdx.game.Tools.WorldContactListener;
 
 public class PlayScreen implements Screen{
    private MyGdxGame game;
@@ -70,7 +71,11 @@ public class PlayScreen implements Screen{
         b2dr = new Box2DDebugRenderer();
        new B2WorldCreator(world, map);
        player = new Mario(world, this);
+
+       world.setContactListener(new WorldContactListener());
+
         }
+
 
     public TextureAtlas getAtlas() {
         return atlas;

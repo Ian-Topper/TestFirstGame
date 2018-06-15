@@ -158,6 +158,13 @@ public class Mario extends Sprite {
         fdef.shape = shape;
         b2body.createFixture(fdef);
 
+        EdgeShape head = new EdgeShape();
+        head.set(new Vector2(-2 / MyGdxGame.PPM, 6 / MyGdxGame.PPM), new Vector2(2 / MyGdxGame.PPM, 5 / MyGdxGame.PPM));
+        fdef.shape= head;
+        fdef.isSensor = true;
+
+        b2body.createFixture(fdef).setUserData("head");
+
     }
     public float getStateTimer(){
 
