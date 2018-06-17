@@ -3,6 +3,9 @@ package com.mygdx.game;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -21,9 +24,25 @@ public class MyGdxGame extends Game {
 
 	public SpriteBatch batch;
 
-	@Override
+	public static AssetManager manager;
+
+    @Override
+    public void dispose() {
+        super.dispose();
+        manager.dispose();
+        batch.dispose();
+    }
+
+    @Override
 	public void create () {
 		batch = new SpriteBatch();
+		manager = new AssetManager();
+		manager.load("audio/music/mario_music.ogg", Music.class);
+        manager.load("audio/sounds/smb_coin.wav", Sound.class);
+        manager.load("audio/sounds/smb_bump.wav", Sound.class);
+        manager.load("audio/sounds/smb_breakblock.wav", Sound.class);
+
+        manager.finishLoading();
 		setScreen(new PlayScreen(this));
 	}
 

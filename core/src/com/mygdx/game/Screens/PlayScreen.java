@@ -1,6 +1,7 @@
 package com.mygdx.game.Screens;
 
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
@@ -46,7 +47,7 @@ public class PlayScreen implements Screen{
     private World world;
 
     private Box2DDebugRenderer b2dr;
-
+    private Music music;
 
 
     public PlayScreen(MyGdxGame game){
@@ -74,6 +75,9 @@ public class PlayScreen implements Screen{
 
        world.setContactListener(new WorldContactListener());
 
+       music = MyGdxGame.manager.get("audio/music/mario_music.ogg", Music.class);
+       music.setLooping(true);
+       music.play();
         }
 
 

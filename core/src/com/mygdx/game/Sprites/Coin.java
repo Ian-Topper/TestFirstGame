@@ -1,6 +1,7 @@
 package com.mygdx.game.Sprites;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileSet;
@@ -30,6 +31,10 @@ public class Coin extends InteractiveTileObject{
     @Override
     public void onHeadHit() {
         Gdx.app.log("Coin", "Collision");
+        if(getCell().getTile().getId() == BLANK_COIN)
+            MyGdxGame.manager.get("audio/sounds/smb_bump.wav", Sound.class).play();
+        else
+            MyGdxGame.manager.get("audio/sounds/smb_coin.wav", Sound.class).play();
         getCell().setTile(tileSet.getTile(BLANK_COIN));
         Hud.addScore(200);
     }
