@@ -1,48 +1,18 @@
 package com.mygdx.game.Sprites;
 
-
-import com.badlogic.gdx.audio.Music;
-
-import com.badlogic.gdx.audio.Sound;
-
 import com.badlogic.gdx.graphics.g2d.Animation;
-
-import com.badlogic.gdx.graphics.g2d.Batch;
-
 import com.badlogic.gdx.graphics.g2d.Sprite;
-
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-
 import com.badlogic.gdx.math.Vector2;
-
 import com.badlogic.gdx.physics.box2d.Body;
-
 import com.badlogic.gdx.physics.box2d.BodyDef;
-
 import com.badlogic.gdx.physics.box2d.CircleShape;
-
 import com.badlogic.gdx.physics.box2d.EdgeShape;
-
-import com.badlogic.gdx.physics.box2d.Filter;
-
-import com.badlogic.gdx.physics.box2d.Fixture;
-
 import com.badlogic.gdx.physics.box2d.FixtureDef;
-
 import com.badlogic.gdx.physics.box2d.World;
-
 import com.badlogic.gdx.utils.Array;
-
-
-
-
 import com.mygdx.game.MyGdxGame;
-
 import com.mygdx.game.Screens.PlayScreen;
-
-//import com.mygdx.game.Sprites.Other.FireBall;
-
-//import com.mygdx.game.Sprites.Enemies.*;
 
 public class Mario extends Sprite {
 
@@ -57,9 +27,9 @@ public class Mario extends Sprite {
     private float stateTimer;
     private boolean runningRight;
 
-    public Mario(World world, PlayScreen screen){
+    public Mario(PlayScreen screen){
         super(screen.getAtlas().findRegion("little_mario"));
-        this.world = world;
+        this.world = screen.getWorld();
         currentState = State.STANDING;
         previousState = State.STANDING;
         stateTimer = 0;
@@ -155,7 +125,7 @@ public class Mario extends Sprite {
         CircleShape shape = new CircleShape();
         shape.setRadius(6 / MyGdxGame.PPM);
         fdef.filter.categoryBits = MyGdxGame.MARIO_BIT;
-        fdef.filter.maskBits = MyGdxGame.DEFAULT_BIT | MyGdxGame.COIN_BIT | MyGdxGame.BRICK_BIT;
+        fdef.filter.maskBits = MyGdxGame.GROUND_BIT | MyGdxGame.COIN_BIT | MyGdxGame.BRICK_BIT;
 
         fdef.shape = shape;
         b2body.createFixture(fdef);
