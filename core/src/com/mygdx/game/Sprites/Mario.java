@@ -125,7 +125,9 @@ public class Mario extends Sprite {
         CircleShape shape = new CircleShape();
         shape.setRadius(6 / MyGdxGame.PPM);
         fdef.filter.categoryBits = MyGdxGame.MARIO_BIT;
-        fdef.filter.maskBits = MyGdxGame.GROUND_BIT | MyGdxGame.COIN_BIT | MyGdxGame.BRICK_BIT;
+        fdef.filter.maskBits = MyGdxGame.GROUND_BIT |
+                MyGdxGame.COIN_BIT | MyGdxGame.BRICK_BIT |
+                MyGdxGame.ENEMY_BIT | MyGdxGame.OBJECT_BIT;
 
         fdef.shape = shape;
         b2body.createFixture(fdef);
