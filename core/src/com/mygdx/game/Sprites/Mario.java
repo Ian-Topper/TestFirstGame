@@ -127,7 +127,8 @@ public class Mario extends Sprite {
         fdef.filter.categoryBits = MyGdxGame.MARIO_BIT;
         fdef.filter.maskBits = MyGdxGame.GROUND_BIT |
                 MyGdxGame.COIN_BIT | MyGdxGame.BRICK_BIT |
-                MyGdxGame.ENEMY_BIT | MyGdxGame.OBJECT_BIT;
+                MyGdxGame.ENEMY_BIT | MyGdxGame.OBJECT_BIT |
+                MyGdxGame.ENEMY_HEAD_BIT;
 
         fdef.shape = shape;
         b2body.createFixture(fdef);

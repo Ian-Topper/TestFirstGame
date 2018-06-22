@@ -74,7 +74,7 @@ private Goomba goomba;
        music.setLooping(true);
        music.play();
 
-       goomba = new Goomba(this, .32f, .32f);
+       goomba = new Goomba(this, 2.4f, .16f);
         }
 
 
