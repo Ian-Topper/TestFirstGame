@@ -17,6 +17,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.MyGdxGame;
+import com.mygdx.game.Sprites.Enemy;
 import com.mygdx.game.Sprites.Goomba;
 import com.mygdx.game.Sprites.Mario;
 import com.mygdx.game.Tools.B2WorldCreator;
@@ -34,13 +35,14 @@ public class PlayScreen implements Screen{
     private OrthogonalTiledMapRenderer renderer;
 
     private Mario player;
-private Goomba goomba;
+
     //Box2d variables
 
     private World world;
 
     private Box2DDebugRenderer b2dr;
     private Music music;
+    private B2WorldCreator creator;
 
 
     public PlayScreen(MyGdxGame game){
@@ -64,7 +66,7 @@ private Goomba goomba;
             //allows for debug lines of our box2d world.
         b2dr = new Box2DDebugRenderer();
 
-       new B2WorldCreator(this);
+       creator = new B2WorldCreator(this);
 
        player = new Mario( this);
 
@@ -74,7 +76,7 @@ private Goomba goomba;
        music.setLooping(true);
        music.play();
 
-       goomba = new Goomba(this, 2.4f, .16f);
+
         }
 
 
@@ -106,7 +108,8 @@ private Goomba goomba;
 
         world.step(1/60f, 6, 2);
         player.update(dt);
-        goomba.update(dt);
+        for(Enemy enemy : creator.getGoombas())
+            enemy.update(dt);
 
         hud.update(dt);
         gameCam.position.x = player.b2body.getPosition().x;
@@ -129,7 +132,8 @@ private Goomba goomba;
         game.batch.setProjectionMatrix(gameCam.combined);
         game.batch.begin();
         player.draw(game.batch);
-        goomba.draw(game.batch);
+        for(Enemy enemy : creator.getGoombas())
+            enemy.draw(game.batch);
         game.batch.end();
 
         game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
