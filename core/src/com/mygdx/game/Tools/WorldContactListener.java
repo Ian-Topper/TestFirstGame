@@ -7,8 +7,8 @@ import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.mygdx.game.MyGdxGame;
-import com.mygdx.game.Sprites.Enemy;
-import com.mygdx.game.Sprites.InteractiveTileObject;
+import com.mygdx.game.Sprites.Enemies.Enemy;
+import com.mygdx.game.Sprites.TileObjects.InteractiveTileObject;
 
 
 public class WorldContactListener implements ContactListener {

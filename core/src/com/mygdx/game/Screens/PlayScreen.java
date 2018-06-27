@@ -17,8 +17,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.MyGdxGame;
-import com.mygdx.game.Sprites.Enemy;
-import com.mygdx.game.Sprites.Goomba;
+import com.mygdx.game.Sprites.Enemies.Enemy;
 import com.mygdx.game.Sprites.Mario;
 import com.mygdx.game.Tools.B2WorldCreator;
 import com.mygdx.game.Tools.WorldContactListener;
@@ -108,9 +107,12 @@ public class PlayScreen implements Screen{
 
         world.step(1/60f, 6, 2);
         player.update(dt);
-        for(Enemy enemy : creator.getGoombas())
+        for(Enemy enemy : creator.getGoombas()) {
             enemy.update(dt);
-
+            ///Unfreeze enemies when mario is near
+            if(enemy.getX() < player.getX() + 224 / MyGdxGame.PPM)
+                enemy.b2body.setActive(true);
+        }
         hud.update(dt);
         gameCam.position.x = player.b2body.getPosition().x;
         gameCam.update();

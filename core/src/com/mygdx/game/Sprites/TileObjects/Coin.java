@@ -1,4 +1,4 @@
-package com.mygdx.game.Sprites;
+package com.mygdx.game.Sprites.TileObjects;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
@@ -10,7 +10,7 @@ import com.mygdx.game.Scenes.Hud;
 import com.mygdx.game.Screens.PlayScreen;
 
 
-public class Coin extends InteractiveTileObject{
+public class Coin extends InteractiveTileObject {
     private static TiledMapTileSet tileSet;
     private final int BLANK_COIN = 28;
 
