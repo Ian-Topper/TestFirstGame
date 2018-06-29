@@ -21,6 +21,7 @@ public abstract class Item extends Sprite {
         this.world = screen.getWorld();
         setPosition(x, y);
         setBounds(getX(), getY(), 16 / MyGdxGame.PPM, 16 / MyGdxGame.PPM);
+        defineItem();
         toDestroy = false;
         destroyed = false;
     }
