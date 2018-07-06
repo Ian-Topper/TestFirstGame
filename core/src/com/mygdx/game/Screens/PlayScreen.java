@@ -27,6 +27,7 @@ import com.mygdx.game.Tools.B2WorldCreator;
 import com.mygdx.game.Tools.WorldContactListener;
 
 import java.util.PriorityQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 
 public class PlayScreen implements Screen{
    private MyGdxGame game;
@@ -48,7 +49,7 @@ public class PlayScreen implements Screen{
     private Box2DDebugRenderer b2dr;
     private Music music;
     private Array<Item> items;
-    private PriorityQueue<ItemDef> itemsToSpawn;
+    private LinkedBlockingQueue<ItemDef> itemsToSpawn;
     private B2WorldCreator creator;
 
 
@@ -84,7 +85,7 @@ public class PlayScreen implements Screen{
        music.play();
 
        items = new Array<Item>();
-        itemsToSpawn = new PriorityQueue<ItemDef>();
+        itemsToSpawn = new LinkedBlockingQueue<ItemDef>();
         }
 
        public void spawnItem(ItemDef idef){
@@ -156,7 +157,11 @@ public class PlayScreen implements Screen{
 
         game.batch.setProjectionMatrix(gameCam.combined);
         game.batch.begin();
+
+        ///Bring back Mario
         player.draw(game.batch);
+
+
         for(Enemy enemy : creator.getGoombas())
             enemy.draw(game.batch);
         for(Item item : items)

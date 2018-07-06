@@ -70,7 +70,11 @@
   <object id="567" x="2448" y="160" width="16" height="48"/>
  </objectgroup>
  <objectgroup name="coins">
-  <object id="443" x="240" y="144" width="16" height="16"/>
+  <object id="443" x="240" y="144" width="16" height="16">
+   <properties>
+    <property name="mushroom" value=""/>
+   </properties>
+  </object>
   <object id="444" x="288" y="144" width="16" height="16"/>
   <object id="445" x="272" y="80" width="16" height="16"/>
   <object id="446" x="320" y="80" width="16" height="16"/>

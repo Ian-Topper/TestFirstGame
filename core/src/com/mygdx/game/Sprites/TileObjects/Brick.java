@@ -2,21 +2,22 @@ package com.mygdx.game.Sprites.TileObjects;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
-import com.badlogic.gdx.math.Rectangle;
 import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.Scenes.Hud;
 import com.mygdx.game.Screens.PlayScreen;
+import com.mygdx.game.Sprites.Mario;
 
 public class Brick extends InteractiveTileObject {
-    public Brick(PlayScreen screen, Rectangle bounds){
-        super(screen, bounds);
+    public Brick(PlayScreen screen, MapObject object){
+        super(screen, object);
         fixture.setUserData(this);
         setCategoryFilter(MyGdxGame.BRICK_BIT);
     }
 
     @Override
-    public void onHeadHit() {
+    public void onHeadHit(Mario userData) {
         Gdx.app.log("Brick", "Collision");
         setCategoryFilter(MyGdxGame.DESTROYED_BIT);
         getCell().setTile(null);

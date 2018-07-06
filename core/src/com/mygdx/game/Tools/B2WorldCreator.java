@@ -54,17 +54,15 @@ public class B2WorldCreator {
             fdef.filter.categoryBits = MyGdxGame.OBJECT_BIT;
             body.createFixture(fdef);
         }
-        ////Create brick bodies/fixtures
-        for (MapObject object : map.getLayers().get(5).getObjects().getByType(RectangleMapObject.class)) {
-            Rectangle rect = ((RectangleMapObject) object).getRectangle();
+        //create brick bodies/fixtures
 
-            new Brick(screen, rect);
+        for(MapObject object : map.getLayers().get(5).getObjects().getByType(RectangleMapObject.class)){
+            new Brick(screen, object);
         }
-        ////Create coinn bodies/fixtures
-        for (MapObject object : map.getLayers().get(4).getObjects().getByType(RectangleMapObject.class)) {
-            Rectangle rect = ((RectangleMapObject) object).getRectangle();
+        //create coin bodies/fixtures
 
-            new Coin(screen, rect);
+        for(MapObject object : map.getLayers().get(4).getObjects().getByType(RectangleMapObject.class)){
+            new Coin(screen, object);
         }
         ///create all goombas
         goombas = new Array<Goomba>();
