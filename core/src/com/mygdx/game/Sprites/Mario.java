@@ -1,5 +1,6 @@
 package com.mygdx.game.Sprites;
 
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -13,6 +14,8 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.Screens.PlayScreen;
+
+import static com.badlogic.gdx.Input.Keys.M;
 
 public class Mario extends Sprite {
 
@@ -30,8 +33,9 @@ public class Mario extends Sprite {
     private TextureRegion bigMarioJump;
     private Animation bigMarioRun;
     private Animation<TextureRegion> growMario;
-    private boolean marioIsBig;
+    public static boolean marioIsBig;
     private boolean runGrowAnimation;
+    private boolean timeToDefineBigMario;
 
     public Mario(PlayScreen screen){
 
@@ -77,8 +81,47 @@ public class Mario extends Sprite {
     }
 
     public void update(float dt){
+        if(marioIsBig)
+            setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2 - 6 / MyGdxGame.PPM );
+        else
         setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
         setRegion(getFrame(dt));
+        if(timeToDefineBigMario)
+            defineBigMario();
+    }
+
+    public void defineBigMario(){
+        Vector2 currentPosition = b2body.getPosition();
+        world.destroyBody(b2body);
+
+        BodyDef bdef = new BodyDef();
+        bdef.position.set(currentPosition.add(0, 10 / MyGdxGame.PPM));
+        bdef.type = BodyDef.BodyType.DynamicBody;
+        b2body = world.createBody(bdef);
+
+        FixtureDef fdef = new FixtureDef();
+        CircleShape shape = new CircleShape();
+        shape.setRadius(6 / MyGdxGame.PPM);
+        fdef.filter.categoryBits = MyGdxGame.MARIO_BIT;
+        fdef.filter.maskBits = MyGdxGame.GROUND_BIT |
+                MyGdxGame.COIN_BIT | MyGdxGame.BRICK_BIT |
+                MyGdxGame.ENEMY_BIT | MyGdxGame.OBJECT_BIT |
+                MyGdxGame.ENEMY_HEAD_BIT |
+                MyGdxGame.ITEM_BIT;
+
+        fdef.shape = shape;
+        b2body.createFixture(fdef).setUserData(this);
+        shape.setPosition(new Vector2(0, -14 / MyGdxGame.PPM));
+        b2body.createFixture(fdef).setUserData(this);
+
+        EdgeShape head = new EdgeShape();
+        head.set(new Vector2(-2 / MyGdxGame.PPM, 6 / MyGdxGame.PPM), new Vector2(2 / MyGdxGame.PPM, 6 / MyGdxGame.PPM));
+        fdef.filter.categoryBits = MyGdxGame.MARIO_HEAD_BIT;
+        fdef.shape = head;
+        fdef.isSensor = true;
+
+        b2body.createFixture(fdef).setUserData(this);
+        timeToDefineBigMario = false;
     }
 
     public TextureRegion getFrame(float dt){
@@ -160,36 +203,32 @@ public class Mario extends Sprite {
                 MyGdxGame.ENEMY_BIT | MyGdxGame.OBJECT_BIT |
                 MyGdxGame.ENEMY_HEAD_BIT |
                 MyGdxGame.ITEM_BIT;
-
         fdef.shape = shape;
         b2body.createFixture(fdef).setUserData(this);
-
-
         EdgeShape head = new EdgeShape();
-
         head.set(new Vector2(-2 / MyGdxGame.PPM, 6 / MyGdxGame.PPM), new Vector2(2 / MyGdxGame.PPM, 6 / MyGdxGame.PPM));
-
         fdef.filter.categoryBits = MyGdxGame.MARIO_HEAD_BIT;
-
         fdef.shape = head;
-
         fdef.isSensor = true;
-
-
-
         b2body.createFixture(fdef).setUserData(this);
-
     }
     public float getStateTimer(){
 
         return stateTimer;
 
     }
-    public void grow(){
-      runGrowAnimation = true;
-      marioIsBig = true;
-      setBounds(getX(), getY(), getWidth(), getHeight() * 2);
+    public void grow() {
+        if (!marioIsBig) {
+            runGrowAnimation = true;
+            marioIsBig = true;
+            timeToDefineBigMario = true;
+            setBounds(getX(), getY(), getWidth(), getHeight() * 2);
+            MyGdxGame.manager.get("audio/sounds/power-up.wav", Sound.class).play();
+        }
+    }
 
+    public static boolean isBig(){
+        return marioIsBig;
     }
 }
 

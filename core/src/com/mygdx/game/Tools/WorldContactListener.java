@@ -22,28 +22,16 @@ public class WorldContactListener implements ContactListener {
 
         int cDef = fixA.getFilterData().categoryBits | fixB.getFilterData().categoryBits;
 
-        if (fixA.getUserData() == "head" || fixB.getUserData() == "head"){
-    Fixture head = fixA.getUserData() == "head" ? fixA : fixB;
-    Fixture object = head == fixA ? fixB : fixA;
 
-    if(object.getUserData() != null && InteractiveTileObject.class.isAssignableFrom(object.getUserData().getClass())){
-        ((InteractiveTileObject) object.getUserData()).onHeadHit((Mario) fixA.getUserData());
-             }
-        }
+
 
         switch (cDef){
             case MyGdxGame.MARIO_HEAD_BIT | MyGdxGame.BRICK_BIT:
-
             case MyGdxGame.MARIO_HEAD_BIT | MyGdxGame.COIN_BIT:
-
                 if(fixA.getFilterData().categoryBits == MyGdxGame.MARIO_HEAD_BIT)
-
                     ((InteractiveTileObject) fixB.getUserData()).onHeadHit((Mario) fixA.getUserData());
-
                 else
-
                     ((InteractiveTileObject) fixA.getUserData()).onHeadHit((Mario) fixB.getUserData());
-
                 break;
             case MyGdxGame.ENEMY_HEAD_BIT | MyGdxGame.MARIO_BIT:
                 if(fixA.getFilterData().categoryBits == MyGdxGame.ENEMY_HEAD_BIT)

@@ -10,6 +10,8 @@ import com.mygdx.game.Screens.PlayScreen;
 import com.mygdx.game.Sprites.Mario;
 
 public class Brick extends InteractiveTileObject {
+
+
     public Brick(PlayScreen screen, MapObject object){
         super(screen, object);
         fixture.setUserData(this);
@@ -17,13 +19,17 @@ public class Brick extends InteractiveTileObject {
     }
 
     @Override
-    public void onHeadHit(Mario userData) {
-        Gdx.app.log("Brick", "Collision");
-        setCategoryFilter(MyGdxGame.DESTROYED_BIT);
-        getCell().setTile(null);
-        Hud.addScore(200);
-        MyGdxGame.manager.get("audio/sounds/smb_breakblock.wav", Sound.class).play();
+    public void onHeadHit(Mario mario) {
 
+        if (Mario.marioIsBig) {
+            Gdx.app.log("Brick", "Collision");
+            setCategoryFilter(MyGdxGame.DESTROYED_BIT);
+            getCell().setTile(null);
+            Hud.addScore(200);
+            MyGdxGame.manager.get("audio/sounds/smb_breakblock.wav", Sound.class).play();
+        }
+        else
+            MyGdxGame.manager.get("audio/sounds/smb_bump.wav", Sound.class).play();
     }
     public TiledMapTileLayer.Cell getCell(){
         TiledMapTileLayer layer = (TiledMapTileLayer) map.getLayers().get(1);
