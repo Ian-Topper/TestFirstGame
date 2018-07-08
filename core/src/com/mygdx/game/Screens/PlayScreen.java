@@ -47,7 +47,7 @@ public class PlayScreen implements Screen{
     private World world;
 
     private Box2DDebugRenderer b2dr;
-    private Music music;
+    public static Music music;
     private Array<Item> items;
     private LinkedBlockingQueue<ItemDef> itemsToSpawn;
     private B2WorldCreator creator;

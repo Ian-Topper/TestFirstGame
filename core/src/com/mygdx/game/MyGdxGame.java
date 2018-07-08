@@ -49,6 +49,9 @@ public class MyGdxGame extends Game {
         manager.load("audio/sounds/smb_breakblock.wav", Sound.class);
 		manager.load("audio/sounds/smb_powerup_appears.wav", Sound.class);
 		manager.load("audio/sounds/power-up.wav", Sound.class);
+		manager.load("audio/sounds/shrink.wav", Sound.class);
+		manager.load("audio/sounds/stomp.wav", Sound.class);
+		manager.load("audio/sounds/player_down.wav", Sound.class);
         manager.finishLoading();
 		setScreen(new PlayScreen(this));
 	}

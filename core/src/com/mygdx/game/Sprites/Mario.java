@@ -14,8 +14,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.Screens.PlayScreen;
-
-import static com.badlogic.gdx.Input.Keys.M;
+import com.mygdx.game.Sprites.Enemies.Enemy;
 
 public class Mario extends Sprite {
 
@@ -36,6 +35,7 @@ public class Mario extends Sprite {
     public static boolean marioIsBig;
     private boolean runGrowAnimation;
     private boolean timeToDefineBigMario;
+    private boolean timeToRedefineBigMario;
 
     public Mario(PlayScreen screen){
 
@@ -88,6 +88,8 @@ public class Mario extends Sprite {
         setRegion(getFrame(dt));
         if(timeToDefineBigMario)
             defineBigMario();
+        if (timeToRedefineBigMario)
+            reDefineMario();
     }
 
     public void defineBigMario(){
@@ -230,5 +232,46 @@ public class Mario extends Sprite {
     public static boolean isBig(){
         return marioIsBig;
     }
-}
+    public void hit(Enemy userData){
+        if(marioIsBig){
+            marioIsBig = false;
+            timeToRedefineBigMario = true;
+            setBounds(getX(), getY(), getWidth(), getHeight() / 2);
+            MyGdxGame.manager.get("audio/sounds/shrink.wav", Sound.class).play();
+        }
+        else{
+            PlayScreen.music.dispose();
+            MyGdxGame.manager.get("audio/sounds/player_down.wav", Sound.class).play();
+        }
+    }
+    public void reDefineMario(){
+        Vector2 position = b2body.getPosition();
+        world.destroyBody(b2body);
+        BodyDef bdef = new BodyDef();
+        bdef.position.set(position);
+        bdef.type = BodyDef.BodyType.DynamicBody;
+        b2body = world.createBody(bdef);
+
+        FixtureDef fdef = new FixtureDef();
+        CircleShape shape = new CircleShape();
+        shape.setRadius(6 / MyGdxGame.PPM);
+        fdef.filter.categoryBits = MyGdxGame.MARIO_BIT;
+        fdef.filter.maskBits = MyGdxGame.GROUND_BIT |
+                MyGdxGame.COIN_BIT | MyGdxGame.BRICK_BIT |
+                MyGdxGame.ENEMY_BIT | MyGdxGame.OBJECT_BIT |
+                MyGdxGame.ENEMY_HEAD_BIT |
+                MyGdxGame.ITEM_BIT;
+        fdef.shape = shape;
+        b2body.createFixture(fdef).setUserData(this);
+        EdgeShape head = new EdgeShape();
+        head.set(new Vector2(-2 / MyGdxGame.PPM, 6 / MyGdxGame.PPM), new Vector2(2 / MyGdxGame.PPM, 6 / MyGdxGame.PPM));
+        fdef.filter.categoryBits = MyGdxGame.MARIO_HEAD_BIT;
+        fdef.shape = head;
+        fdef.isSensor = true;
+        b2body.createFixture(fdef).setUserData(this);
+
+        timeToRedefineBigMario = false;
+    }
+    }
+
 
