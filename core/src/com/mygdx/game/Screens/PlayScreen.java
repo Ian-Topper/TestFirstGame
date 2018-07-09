@@ -109,15 +109,16 @@ public class PlayScreen implements Screen{
 
     }
     public void handleInput(float dt){
-    if(Gdx.input.isKeyJustPressed(Input.Keys.UP))
-        player.b2body.applyLinearImpulse(new Vector2(0, 4f), player.b2body.getWorldCenter(), true);
-        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) && player.b2body.getLinearVelocity().x <= 2)
-            player.b2body.applyLinearImpulse(new Vector2(0.1f, 0), player.b2body.getWorldCenter(), true);
-        if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && player.b2body.getLinearVelocity().x >= -2)
-            player.b2body.applyLinearImpulse(new Vector2(-0.1f, 0), player.b2body.getWorldCenter(), true);
+        if(player.currentState != Mario.State.DEAD) {
+            if (Gdx.input.isKeyJustPressed(Input.Keys.UP))
+                player.b2body.applyLinearImpulse(new Vector2(0, 4f), player.b2body.getWorldCenter(), true);
+            if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) && player.b2body.getLinearVelocity().x <= 2)
+                player.b2body.applyLinearImpulse(new Vector2(0.1f, 0), player.b2body.getWorldCenter(), true);
+            if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && player.b2body.getLinearVelocity().x >= -2)
+                player.b2body.applyLinearImpulse(new Vector2(-0.1f, 0), player.b2body.getWorldCenter(), true);
 /*        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE))
             player.fire();*/
-
+        }
     }
 
 
@@ -138,7 +139,10 @@ public class PlayScreen implements Screen{
         for(Item item : items)
             item.update(dt);
         hud.update(dt);
-        gameCam.position.x = player.b2body.getPosition().x;
+        ///attach cam to mario
+        if(player.currentState != Mario.State.DEAD) {
+            gameCam.position.x = player.b2body.getPosition().x;
+        }
         gameCam.update();
         renderer.setView(gameCam);
     }
