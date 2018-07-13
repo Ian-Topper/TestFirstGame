@@ -290,6 +290,10 @@ public class Mario extends Sprite {
 
         timeToRedefineBigMario = false;
     }
+    public boolean isMarioIsDead(){
+        return marioIsDead;
+    }
+
     }
 
 

@@ -174,6 +174,11 @@ public class PlayScreen implements Screen{
 
         game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
         hud.stage.draw();
+
+        if (gameOver()) {
+            game.setScreen(new GameOverScreen(game));
+            dispose();
+        }
     }
 
     public TiledMap getMap(){
@@ -197,6 +202,12 @@ public class PlayScreen implements Screen{
     @Override
     public void resume() {
 
+    }
+    public boolean gameOver(){
+        if(player.currentState == Mario.State.DEAD && player.getStateTimer() > 3) {
+            return true;
+        }
+        else return false;
     }
 
     @Override
