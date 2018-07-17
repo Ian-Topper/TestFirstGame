@@ -35,9 +35,9 @@ public class WorldContactListener implements ContactListener {
                 break;
             case MyGdxGame.ENEMY_HEAD_BIT | MyGdxGame.MARIO_BIT:
                 if(fixA.getFilterData().categoryBits == MyGdxGame.ENEMY_HEAD_BIT)
-                ((Enemy)fixA.getUserData()).hitOnHead();
+                ((Enemy)fixA.getUserData()).hitOnHead((Mario) fixB.getUserData());
                 else
-                    ((Enemy)fixB.getUserData()).hitOnHead();
+                    ((Enemy)fixB.getUserData()).hitOnHead((Mario) fixA.getUserData());
                 break;
             case MyGdxGame.ENEMY_BIT | MyGdxGame.OBJECT_BIT:
                 if(fixA.getFilterData().categoryBits == MyGdxGame.ENEMY_BIT)

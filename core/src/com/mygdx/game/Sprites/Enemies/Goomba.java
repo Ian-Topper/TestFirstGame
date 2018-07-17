@@ -13,6 +13,7 @@ import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.Screens.PlayScreen;
 import com.mygdx.game.Sprites.Enemies.Enemy;
+import com.mygdx.game.Sprites.Mario;
 
 public class Goomba extends Enemy {
 
@@ -93,7 +94,7 @@ public class Goomba extends Enemy {
     }
 
     @Override
-    public void hitOnHead() {
+    public void hitOnHead(Mario mario) {
 
         setToDestroy = true;
         MyGdxGame.manager.get("audio/sounds/stomp.wav", Sound.class).play();

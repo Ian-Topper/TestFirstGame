@@ -129,7 +129,7 @@ public class PlayScreen implements Screen{
         handleSpawningItems();
         world.step(1/60f, 6, 2);
         player.update(dt);
-        for(Enemy enemy : creator.getGoombas()) {
+        for(Enemy enemy : creator.getEnemies()) {
             enemy.update(dt);
             ///Unfreeze enemies when mario is near
             if(enemy.getX() < player.getX() + 224 / MyGdxGame.PPM)
@@ -166,7 +166,7 @@ public class PlayScreen implements Screen{
         player.draw(game.batch);
 
 
-        for(Enemy enemy : creator.getGoombas())
+        for(Enemy enemy : creator.getEnemies())
             enemy.draw(game.batch);
         for(Item item : items)
             item.draw(game.batch);

@@ -351,7 +351,6 @@
   <object id="539" x="976" y="128" width="16" height="16"/>
  </objectgroup>
  <objectgroup name="Turtles">
-  <object id="588" x="1012" y="-184"/>
   <object id="589" x="208" y="176" width="16" height="16"/>
   <object id="590" x="608" y="80" width="16" height="16"/>
   <object id="591" x="784" y="112" width="16" height="16"/>
